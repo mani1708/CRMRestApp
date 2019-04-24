@@ -1,5 +1,6 @@
 package com.app.crm.myapp.service;
 
+import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
 
@@ -10,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Repository;
 
+import com.app.crm.myapp.Exception.CustomizedException;
 import com.app.crm.myapp.dao.CustomerDaoRepo;
 import com.app.crm.myapp.entity.Customer;
 
@@ -22,9 +24,17 @@ public class CustomerService {
 	
 	
 	//find customers by id
-	public Optional<Customer> findById(Integer id) {
-		Optional<Customer> customer=customerDaoRepo.findById(id);
-		return customer;
+	public Customer findById(Integer id) {
+				Optional<Customer> result=customerDaoRepo.findById(id);
+				Customer customer=null;
+				if(result.isPresent()) {
+					customer=result.get();
+					return customer;
+				}
+				else {
+					throw new CustomizedException("Customer id does not exist");
+				}
+					
 	}
 	
 	//get all customers
@@ -40,16 +50,14 @@ public class CustomerService {
 	}
 	
 	public ResponseEntity<Customer> deleteById(Integer id) {
-		List<Customer> list=customerDaoRepo.findAll();
-		int size=list.size();
-		if(id==null || id>size) {
-			return new ResponseEntity<Customer>(HttpStatus.REQUESTED_RANGE_NOT_SATISFIABLE);
+		Optional<Customer> result=customerDaoRepo.findById(id);
+		if(result.isPresent()) {
+			 customerDaoRepo.deleteById(id);
+			 return new ResponseEntity<Customer>(HttpStatus.OK);	
 		}
 		else {
-			customerDaoRepo.deleteById(id);
-			return new ResponseEntity<Customer>(HttpStatus.OK);
-		}
-		
+			throw new CustomizedException("Customer id does not exist or already deleted");
+		}					
 	}
 
 	public ResponseEntity<Customer> update(Customer customer) {

@@ -1,13 +1,13 @@
 package com.app.crm.myapp;
 
-import org.hibernate.annotations.common.util.impl.LoggerFactory;
+
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
 import com.app.crm.myapp.dao.CustomerDaoRepo;
-import com.app.crm.myapp.service.CustomerService;
+
 import com.app.crm.myapp.entity.Customer;
 
 

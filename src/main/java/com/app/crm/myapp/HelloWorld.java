@@ -1,14 +1,17 @@
 package com.app.crm.myapp;
 
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
 
-@RestController
+@Controller
 public class HelloWorld {
 
 	@GetMapping("/hello")
-	public String hello() {
-		return "hello world1";
+	public String hello(Model model) {
+		model.addAttribute("theDate", new java.util.Date());
+	
+		return "abc";
 	}
 	
 }

@@ -5,6 +5,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 
 @Entity
@@ -14,18 +17,18 @@ public class Customer {
 	@Id
 	@GeneratedValue
 	@Column(name="id")
-	Integer id;
+	private Integer id;
 	
+	@Size(min=2) @NotNull
 	@Column(name="first_Name")
-	String firstName;
+	private String firstName;
 	
 	@Column(name="last_Name")
-	String lastName;
+	private String lastName;
 	
-
-
+	@NotNull
 	@Column(name="email")
-	String email;
+	private String email;
 
 	public Customer() {}
 	
